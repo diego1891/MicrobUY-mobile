@@ -1,0 +1,38 @@
+# macOS
+.DS_Store
+
+# Windows
+Thumbs.db
+desktop.ini
+
+# Visual Studio Code
+.vscode/
+
+# Rider
+.idea/
+
+# Xamarin-specific
+bin/
+obj/
+*.user
+*.suo
+*.userprefs
+*.pidb
+*.ide-wal
+*.ide-shm
+*.suo
+*.userprefs
+*.pidb
+
+# MAUI-specific
+/bin/
+/obj/
+*.user
+*.suo
+*.userprefs
+*.pidb
+*.ide-wal
+*.ide-shm
+*.suo
+*.userprefs
+*.pidb
