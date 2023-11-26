@@ -3,12 +3,27 @@
     x:Class="MicrobUY.AppShell"
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-    xmlns:local="clr-namespace:MicrobUY"
-    Shell.FlyoutBehavior="Disabled">
+    xmlns:views="clr-namespace:MicrobUY.Views"
+    Shell.FlyoutBehavior="Flyout"
+    Shell.NavBarIsVisible="False"
+    xmlns:info="clr-namespace:Microsoft.Maui.ApplicationModel;assembly=Microsoft.Maui.Essentials">
+
+    <Shell.FlyoutHeader>
+        <Image Source="microbuy" WidthRequest="180" Margin="5"/>
+    </Shell.FlyoutHeader>
+
+    <Shell.FlyoutFooter>
+        <VerticalStackLayout Padding="10">
+            <Label Text="{x:Static info:AppInfo.Name}" />
+            <Label Text="{x:Static info:AppInfo.VersionString}"/>
+        </VerticalStackLayout>
+    </Shell.FlyoutFooter>
+
+
 
     <ShellContent
         Title="Home"
-        ContentTemplate="{DataTemplate local:HomePage}"
+        ContentTemplate="{DataTemplate views:HomePage}"
         Route="HomePage" />
 
 </Shell>

@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="MicrobUY.Views.HomePage"
+             xmlns:model="clr-namespace:MicrobUY.Models.Backend.Posts"
+             xmlns:vm="clr-namespace:MicrobUY.ViewModels"
+             x:DataType="vm:HomeViewModel"
+             Title="HomePage"
+             xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
+             Shell.NavBarIsVisible="False"
+             BackgroundColor="White">
+
+    <ScrollView>
+        <Grid Margin="20" RowSpacing="20">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+            </Grid.RowDefinitions>
+
+            <SearchBar
+                Grid.Row="0"
+                Margin="5"
+                TextColor="Black"
+                BackgroundColor="White"
+                Placeholder="Buscar "
+                Text="{Binding SearchText, Mode=TwoWay}"
+                >       
+                <SearchBar.Behaviors>
+                    <toolkit:UserStoppedTypingBehavior
+                        Command="{Binding EjecutarBusqueda}"
+                        StoppedTypingTimeThreshold="1000"
+                        MinimumLengthThreshold="3"
+                        ShouldDismissKeyboardAutomatically="True"
+                        />
+                </SearchBar.Behaviors>
+
+
+            </SearchBar>
+
+            <!-- Contenido del timeline -->
+            <VerticalStackLayout Grid.Row="2" Spacing="20">
+                <CollectionView 
+                    SelectionMode="Single" 
+                    HeightRequest="620" 
+                    BackgroundColor="White" 
+                    ItemsSource="{Binding Posts}"
+                    SelectedItem="{Binding PostSeleccionado, Mode=TwoWay}"  
+                    >
+                    <CollectionView.ItemsLayout>
+                        <LinearItemsLayout ItemSpacing="15" Orientation="Vertical"/>
+                    </CollectionView.ItemsLayout>
+
+                    <CollectionView.ItemTemplate>
+                        <DataTemplate x:DataType="model:PostResponse">
+                            <Frame Padding="16" BackgroundColor="White" CornerRadius="15" Margin="0,0,0,15" HasShadow="True">
+                                <StackLayout Spacing="10">
+                                    <!-- Texto de la publicación -->
+                                    <Label FontSize="16" Text="{Binding Contenido}" TextColor="#14171A" HorizontalTextAlignment="Center" />
+
+                                    <!-- Contador de 'Me gusta' con icono -->
+                                    <FlexLayout Direction="Row" HorizontalOptions="Start" JustifyContent="SpaceBetween">
+                                        <FlexLayout Direction="Row" AlignItems="Center">
+                                            <Image Source="like_icon" HeightRequest="20" WidthRequest="20" />
+                                            <Label Text="{Binding Likes}" FontSize="14" TextColor="#657786" Margin="5,0,0,0" VerticalOptions="Center" />
+                                        </FlexLayout>
+                                        <Label FontSize="16" Text="{Binding FechaCreacion}" TextColor="#14171A" HorizontalTextAlignment="Center" />
+                                    </FlexLayout>
+
+
+                                </StackLayout>
+                            </Frame>
+                        </DataTemplate>
+                    </CollectionView.ItemTemplate>
+                </CollectionView>
+                <FlexLayout Direction="Row" JustifyContent="SpaceBetween">
+                    <Image Source="post" HeightRequest="20" WidthRequest="20">
+                        <Image.GestureRecognizers>
+                            <TapGestureRecognizer Command="{Binding CrearPostCommand}" />
+                        </Image.GestureRecognizers>
+                    </Image>
+                    <Image Source="logout_icon" HeightRequest="20" WidthRequest="20">
+                        <Image.GestureRecognizers>
+                            <TapGestureRecognizer Command="{Binding LogoutCommand}" />
+                        </Image.GestureRecognizers>
+                    </Image>
+                </FlexLayout>
+            </VerticalStackLayout>
+
+        </Grid>
+    </ScrollView>
+</ContentPage>

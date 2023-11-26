@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="MicrobUY.Views.PostDetailPage"
+             xmlns:model="clr-namespace:MicrobUY.Models.Backend.Posts"
+             xmlns:vm="clr-namespace:MicrobUY.ViewModels"
+             x:DataType="vm:PostDetailViewModel"
+             Title="PostDetailPage">
+
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="20"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+
+        <StackLayout 
+            Grid.Row="1"
+            Margin="20,0,20,0"
+            Orientation="Horizontal">
+
+            <ImageButton 
+                Source="back_icon"
+                CornerRadius="10"
+                BackgroundColor="White"
+                HeightRequest="40"
+                WidthRequest="40"
+                Padding="4"
+                HorizontalOptions="Start"
+                VerticalOptions="Start"
+                Margin="1"
+                Command="{Binding GetBackEventCommand}"
+            />
+        </StackLayout>
+
+        <VerticalStackLayout Grid.Row="2" Margin="5,40,5,0">
+            <Frame Padding="16" BackgroundColor="White" CornerRadius="15" HasShadow="True">
+                <StackLayout Spacing="20">
+                    <!-- Texto de la publicación -->
+                    <Label FontSize="16" Text="{Binding Post.Contenido}" TextColor="#14171A" HorizontalTextAlignment="Center" />
+
+                    <!-- Contador de 'Me gusta' con icono -->
+                    <StackLayout Orientation="Horizontal" HorizontalOptions="StartAndExpand" Margin="10,10,0,0">
+                        <Image Source="like_icon" HeightRequest="20" WidthRequest="20" >
+                            <Image.GestureRecognizers>
+                                <TapGestureRecognizer Command="{Binding LikeCommand}" CommandParameter="{Binding Post.Id}"/>
+                            </Image.GestureRecognizers>
+                        </Image>
+
+
+                        <Label Text="{Binding Post.Likes}" FontSize="14" TextColor="#657786" Margin="0,0,10,0" VerticalOptions="Center" />
+                        <Image Source="retweet" HeightRequest="20" WidthRequest="20" Margin="0,0,70,0" />
+
+
+                        <!-- Mover el siguiente Label a la derecha -->
+                        <Label FontSize="16" Text="{Binding Post.FechaCreacion}" TextColor="#14171A" HorizontalOptions="EndAndExpand" />
+                    </StackLayout>
+                </StackLayout>
+            </Frame>
+        </VerticalStackLayout>
+
+
+
+
+    </Grid>
+</ContentPage>
