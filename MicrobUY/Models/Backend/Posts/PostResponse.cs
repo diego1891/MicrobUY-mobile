@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -13,4 +14,5 @@ public class PostResponse
     public DateTime FechaCreacion { get; set; }
     public int Likes { get; set; }
     public string Hashtag { get; set; }
+    public ObservableCollection<PostResponse> Comentarios { get; set; }
 }

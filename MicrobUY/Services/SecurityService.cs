@@ -1,5 +1,8 @@
-﻿using MicrobUY.Models.Backend.Login;
+﻿using Firebase.Auth;
+using Firebase.Auth.Providers;
+using MicrobUY.Models.Backend.Login;
 using MicrobUY.Models.Config;
+using MicrobUY.Views;
 using Microsoft.Extensions.Configuration;
 using Newtonsoft.Json;
 using System.Net.Http.Headers;
@@ -11,11 +14,27 @@ public class SecurityService
 {
     private HttpClient client;
     private Settings settings;
+    private readonly FirebaseAuthClient _authClient;
+    FirebaseAuthClient cliente = new FirebaseAuthClient(new FirebaseAuthConfig()
+    {
+        ApiKey = "AIzaSyCxBzvPHr85GTaM8a9SDKS53rzx72B2l2c",
+        AuthDomain = "microbuy-5860f.firebaseapp.com",
+        Providers = new FirebaseAuthProvider[]
+                {
+                    new EmailProvider(),
+                    new GoogleProvider().AddScopes("email"),
+                    new FacebookProvider().AddScopes("email"),
+                    new GithubProvider().AddScopes("email")
+                }
+    });
+
+    
 
     public SecurityService(HttpClient client, IConfiguration configuration)
     {
         this.client = client;
         settings = configuration.GetRequiredSection(nameof(Settings)).Get<Settings>();
+     
     }
 
     public async Task<bool> Login(string email, string password)
@@ -71,6 +90,28 @@ public class SecurityService
             return false;
         }
         
+    }
+
+    public async Task<string> MyRedirectMethod(string uri)
+    {
+        // Implement your redirect logic here
+        // For example, you might start an external browser process or handle the URI in some other way
+        // Then return a string, possibly the result of the redirect operation
+        return  $"{nameof(HomePage)}";
+    }
+
+
+
+
+    public async Task<UserCredential> Googlelogin(string email, string password)
+    {
+        FirebaseProviderType firebaseProviderType = FirebaseProviderType.Google;
+        string a = "a";
+        
+        SignInRedirectDelegate redirectDelegate = MyRedirectMethod; // Assign your delegate method here
+        var userCredential = await cliente.SignInWithRedirectAsync(firebaseProviderType, redirectDelegate);
+        //var userCredentials = await cliente.SignInWithEmailAndPasswordAsync(email,password);
+        return userCredential;
     }
 
 }

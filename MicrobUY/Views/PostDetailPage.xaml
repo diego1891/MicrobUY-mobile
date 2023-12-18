@@ -11,10 +11,11 @@
         <Grid.RowDefinitions>
             <RowDefinition Height="20"/>
             <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
 
         <StackLayout 
-            Grid.Row="1"
+            Grid.Row="0"
             Margin="20,0,20,0"
             Orientation="Horizontal">
 
@@ -32,7 +33,7 @@
             />
         </StackLayout>
 
-        <VerticalStackLayout Grid.Row="2" Margin="5,40,5,0">
+        <VerticalStackLayout Grid.Row="1" Margin="5,40,5,0">
             <Frame Padding="16" BackgroundColor="White" CornerRadius="15" HasShadow="True">
                 <StackLayout Spacing="20">
                     <!-- Texto de la publicación -->
@@ -48,18 +49,55 @@
 
 
                         <Label Text="{Binding Post.Likes}" FontSize="14" TextColor="#657786" Margin="0,0,10,0" VerticalOptions="Center" />
-                        <Image Source="retweet" HeightRequest="20" WidthRequest="20" Margin="0,0,70,0" />
+                        <Image Source="retweet" HeightRequest="20" WidthRequest="20" Margin="0,0,70,0">
+                            <Image.GestureRecognizers>
+                                <TapGestureRecognizer Command="{Binding RepostCommand}" CommandParameter="{Binding Post.Id}"/>
+                            </Image.GestureRecognizers>
+                        </Image>
 
+                        <Image Source="comment" HeightRequest="20" WidthRequest="20" Margin="0,0,10,0">
+                            <Image.GestureRecognizers>
+                                <TapGestureRecognizer Command="{Binding OpenCommentCommand} " CommandParameter="{Binding Post.Id}"/>
+                            </Image.GestureRecognizers>
+                        </Image>
 
                         <!-- Mover el siguiente Label a la derecha -->
                         <Label FontSize="16" Text="{Binding Post.FechaCreacion}" TextColor="#14171A" HorizontalOptions="EndAndExpand" />
                     </StackLayout>
+                    <ContentView Grid.Row="2" x:Name="commentPopup" IsVisible="{Binding IsOpen}" >
+                        <StackLayout VerticalOptions="CenterAndExpand" HorizontalOptions="CenterAndExpand">
+                            <Entry Text="{Binding CommentText}" Placeholder="Escribe tu comentario..." />
+                            <StackLayout Orientation="Horizontal" HorizontalOptions="StartAndExpand">
+                                <Image Source="check" HeightRequest="20" WidthRequest="20" Margin="10,0,90,0">
+                                    <Image.GestureRecognizers>
+                                        <TapGestureRecognizer Command="{Binding CommentCommand} " CommandParameter="{Binding CommentText}"/>
+                                    </Image.GestureRecognizers>
+                                </Image>
+                                <Image Source="cancelar" HeightRequest="20" WidthRequest="20" Margin="0,0,10,0">
+                                    <Image.GestureRecognizers>
+                                        <TapGestureRecognizer Command="{Binding CloseCommentCommand}"/>
+                                    </Image.GestureRecognizers>
+                                </Image>
+                            </StackLayout>
+
+                        </StackLayout>
+                    </ContentView>
+                    <CollectionView Grid.Row="2" ItemsSource="{Binding Comments}">
+                        <CollectionView.ItemTemplate>
+                            <DataTemplate x:DataType="model:PostResponse">
+                                <Frame Padding="10" Margin="5" CornerRadius="10">
+                                    <StackLayout>
+                                        <Label Text="{Binding Contenido}" FontSize="14"/>
+                                        <Label Text="{Binding FechaCreacion}" FontSize="12" TextColor="Gray"/>
+                                        <!-- Agrega aquí más elementos si necesitas -->
+                                    </StackLayout>
+                                </Frame>
+                            </DataTemplate>
+                        </CollectionView.ItemTemplate>
+                    </CollectionView>
                 </StackLayout>
             </Frame>
         </VerticalStackLayout>
-
-
-
-
+       
     </Grid>
 </ContentPage>

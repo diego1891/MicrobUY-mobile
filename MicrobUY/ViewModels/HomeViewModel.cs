@@ -1,5 +1,4 @@
 ﻿
-using Android.App.AppSearch;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using MicrobUY.Models.Backend.Posts;
@@ -22,10 +21,16 @@ public partial class HomeViewModel : ViewModelGlobal, IQueryAttributable
     string nombreUsuario;
 
     [ObservableProperty]
+    SearchResponse search;
+
+    [ObservableProperty]
     PostResponse postSeleccionado;
 
     [ObservableProperty]
     private string searchText;
+
+    [ObservableProperty]
+    bool isVisible;
 
     [ObservableProperty]
     ObservableCollection<PostResponse> posts;
@@ -76,7 +81,7 @@ public partial class HomeViewModel : ViewModelGlobal, IQueryAttributable
         {
             IsBusy = true;
             var listPosts = await _postsService.GetPosts();
-            Posts = new ObservableCollection<PostResponse>(listPosts);
+            Posts = new ObservableCollection<PostResponse>(listPosts.Where(post => !string.IsNullOrEmpty(post.Contenido)));
 
         }
         catch (Exception ex)
@@ -136,6 +141,17 @@ public partial class HomeViewModel : ViewModelGlobal, IQueryAttributable
     {
         var busqueda = await _busquedaService.EjecutarBusqueda(SearchText);
         Busquedas = new ObservableCollection<SearchResponse>(busqueda);
+        if (Busquedas != null) {
+            IsVisible = true;
+        }
+       
     });
+
+    [RelayCommand]
+    async Task Buscar()
+    {
+        var uri = $"{nameof(BusquedaPage)}";
+        await _navegacionService.GoToAsync(uri);
+    }
 
 }

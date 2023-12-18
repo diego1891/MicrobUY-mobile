@@ -1,4 +1,5 @@
-﻿using MicrobUY.Models.Backend.Posts;
+﻿using MicrobUY.Models.Backend.Comment;
+using MicrobUY.Models.Backend.Posts;
 using MicrobUY.Models.Config;
 using Microsoft.Extensions.Configuration;
 using Newtonsoft.Json;
@@ -31,6 +32,8 @@ public class PostsService
     }
 
 
+
+
     public async Task<List<PostResponse>> GetPosts()
     {
         var uri = $"{settings.UrlBase}/DanielitaInstancia/Post";
@@ -53,6 +56,17 @@ public class PostsService
         var response = await client.PostAsync(uri, content);
     }
 
+    public async Task RepostPost(string id)
+    {
+        var uri = $"{settings.UrlBase}/DanielitaInstancia/Post/{id}/Repost";
+        client.DefaultRequestHeaders.Authorization = new
+           AuthenticationHeaderValue("bearer", Preferences.Get("accesstoken", string.Empty));
+
+        var content = new StringContent(id, Encoding.UTF8, "application/json");
+
+        var response = await client.PostAsync(uri, content);
+    }
+
     public async Task CrearPost(PostResponse post)
     {
         var uri = $"{settings.UrlBase}/DanielitaInstancia/Post";
@@ -62,6 +76,21 @@ public class PostsService
         var postJson = JsonConvert.SerializeObject(post);
 
         var content = new StringContent(postJson, Encoding.UTF8, "application/json");
+
+        var response = await client.PostAsync(uri, content);
+    }
+
+    public async Task ComentarPost(CommentResponse comment)
+    {
+        var uri = $"{settings.UrlBase}/DanielitaInstancia/Post/{comment.PostId}/comment";
+        client.DefaultRequestHeaders.Authorization = new
+           AuthenticationHeaderValue("bearer", Preferences.Get("accesstoken", string.Empty));
+
+        var comentario = new { content = comment.CommentText };
+
+        var commentJson = JsonConvert.SerializeObject(comentario);
+
+        var content = new StringContent(commentJson, Encoding.UTF8, "application/json");
 
         var response = await client.PostAsync(uri, content);
     }

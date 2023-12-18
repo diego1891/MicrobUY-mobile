@@ -47,9 +47,9 @@ public partial class LoginViewModel : ViewModelGlobal
     }
 
     [RelayCommand]
-    private async Task RegisterCommand()
+    private async Task Register()
     {
-
+        await _securityService.Googlelogin(Email, Password);
     }
 
     private bool StatusConnection()

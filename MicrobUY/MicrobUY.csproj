@@ -28,6 +28,23 @@
 		<SupportedOSPlatformVersion Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'windows'">10.0.17763.0</SupportedOSPlatformVersion>
 		<TargetPlatformMinVersion Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'windows'">10.0.17763.0</TargetPlatformMinVersion>
 		<SupportedOSPlatformVersion Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'tizen'">6.5</SupportedOSPlatformVersion>
+		<AndroidSigningKeyStore>.keystore</AndroidSigningKeyStore>
+	</PropertyGroup>
+
+	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|net7.0-android|AnyCPU'">
+	  <AndroidKeyStore>False</AndroidKeyStore>
+	  <AndroidSigningStorePass>microbuy2023</AndroidSigningStorePass>
+	  <AndroidSigningKeyAlias>dbronc</AndroidSigningKeyAlias>
+	  <AndroidSigningKeyPass>dbronc2023</AndroidSigningKeyPass>
+	  <AndroidApkSignerAdditionalArguments></AndroidApkSignerAdditionalArguments>
+	</PropertyGroup>
+
+	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Release|net7.0-android|AnyCPU'">
+	  <AndroidKeyStore>False</AndroidKeyStore>
+	  <AndroidSigningStorePass>microbuy2023</AndroidSigningStorePass>
+	  <AndroidSigningKeyAlias>dbronc</AndroidSigningKeyAlias>
+	  <AndroidSigningKeyPass>dbronc2023</AndroidSigningKeyPass>
+	  <AndroidApkSignerAdditionalArguments></AndroidApkSignerAdditionalArguments>
 	</PropertyGroup>
 
 	<ItemGroup>
@@ -55,6 +72,9 @@
 	  <None Remove="Resources\Images\bookmark_empty_icon.svg" />
 	  <None Remove="Resources\Images\bookmark_fill_icon.svg" />
 	  <None Remove="Resources\Images\bookmark_icon.svg" />
+	  <None Remove="Resources\Images\cancelar.svg" />
+	  <None Remove="Resources\Images\check.svg" />
+	  <None Remove="Resources\Images\comment.svg" />
 	  <None Remove="Resources\Images\facebook.svg" />
 	  <None Remove="Resources\Images\faq_icon.svg" />
 	  <None Remove="Resources\Images\home_icon.svg" />
@@ -82,6 +102,8 @@
 		<PackageReference Include="CommunityToolkit.Maui" Version="6.1.0" />
 		<PackageReference Include="CommunityToolkit.Maui.Core" Version="6.1.0" />
 		<PackageReference Include="CommunityToolkit.Mvvm" Version="8.2.2" />
+		<PackageReference Include="Facebook" Version="7.0.6" />
+		<PackageReference Include="FirebaseAuthentication.net" Version="4.1.0" />
 		<PackageReference Include="Microsoft.Extensions.Configuration.Binder" Version="7.0.4" />
 		<PackageReference Include="Microsoft.Extensions.Configuration.Json" Version="7.0.0" />
 		<PackageReference Include="Microsoft.Extensions.Logging.Debug" Version="7.0.0" />
@@ -92,9 +114,15 @@
 	  <Compile Update="Views\EscribirPostPage.xaml.cs">
 	    <DependentUpon>EscribirPostPage.xaml</DependentUpon>
 	  </Compile>
+	  <Compile Update="Views\UsuarioDetailPage.xaml.cs">
+	    <DependentUpon>UsuarioDetailPage.xaml</DependentUpon>
+	  </Compile>
 	</ItemGroup>
 
 	<ItemGroup>
+	  <MauiXaml Update="Views\BusquedaPage.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
 	  <MauiXaml Update="Views\EscribirPostPage.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
@@ -102,6 +130,9 @@
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
 	  <MauiXaml Update="Views\LoginPage.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
+	  <MauiXaml Update="Views\UsuarioDetailPage.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
 	  <MauiXaml Update="Views\PostDetailPage.xaml">

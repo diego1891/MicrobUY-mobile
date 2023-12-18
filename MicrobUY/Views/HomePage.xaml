@@ -3,6 +3,7 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="MicrobUY.Views.HomePage"
              xmlns:model="clr-namespace:MicrobUY.Models.Backend.Posts"
+             xmlns:model2="clr-namespace:MicrobUY.Models.Backend.Search"
              xmlns:vm="clr-namespace:MicrobUY.ViewModels"
              x:DataType="vm:HomeViewModel"
              Title="HomePage"
@@ -19,31 +20,11 @@
                 <RowDefinition Height="Auto"/>
             </Grid.RowDefinitions>
 
-            <SearchBar
-                Grid.Row="0"
-                Margin="5"
-                TextColor="Black"
-                BackgroundColor="White"
-                Placeholder="Buscar "
-                Text="{Binding SearchText, Mode=TwoWay}"
-                >       
-                <SearchBar.Behaviors>
-                    <toolkit:UserStoppedTypingBehavior
-                        Command="{Binding EjecutarBusqueda}"
-                        StoppedTypingTimeThreshold="1000"
-                        MinimumLengthThreshold="3"
-                        ShouldDismissKeyboardAutomatically="True"
-                        />
-                </SearchBar.Behaviors>
-
-
-            </SearchBar>
-
             <!-- Contenido del timeline -->
-            <VerticalStackLayout Grid.Row="2" Spacing="20">
+            <VerticalStackLayout Grid.Row="1" Spacing="20">
                 <CollectionView 
                     SelectionMode="Single" 
-                    HeightRequest="620" 
+                    HeightRequest="700" 
                     BackgroundColor="White" 
                     ItemsSource="{Binding Posts}"
                     SelectedItem="{Binding PostSeleccionado, Mode=TwoWay}"  
@@ -74,10 +55,15 @@
                         </DataTemplate>
                     </CollectionView.ItemTemplate>
                 </CollectionView>
-                <FlexLayout Direction="Row" JustifyContent="SpaceBetween">
+                <FlexLayout MaximumHeightRequest="20" Margin="0,10,0,0" Grid.Row="3" Direction="Row" JustifyContent="SpaceBetween">
                     <Image Source="post" HeightRequest="20" WidthRequest="20">
                         <Image.GestureRecognizers>
                             <TapGestureRecognizer Command="{Binding CrearPostCommand}" />
+                        </Image.GestureRecognizers>
+                    </Image>
+                    <Image Source="search_icon" HeightRequest="20" WidthRequest="20">
+                        <Image.GestureRecognizers>
+                            <TapGestureRecognizer Command="{Binding BuscarCommand}" />
                         </Image.GestureRecognizers>
                     </Image>
                     <Image Source="logout_icon" HeightRequest="20" WidthRequest="20">

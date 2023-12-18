@@ -1,12 +1,14 @@
 {
   "version": 2,
-  "dgSpecHash": "E6Kyml2WvT/mKZTeIgQIz6gEcXDjtB82SxBm4m3n1Y2pTzya4sdwxdMBmNgSYw98UbE5XF/x7r1xSOo0XdPHbA==",
+  "dgSpecHash": "sBzz1PBF/3RMzF0vRoRMM/QmDVP+ppF1JBkPgdUEPQhjzjztxjKDy5U3b1JpFTDP0D1Ft5ESrKe5Vi/awaG8BA==",
   "success": true,
   "projectFilePath": "E:\\Maui\\MicrobUY\\MicrobUY\\MicrobUY.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\Diego\\.nuget\\packages\\communitytoolkit.maui\\6.1.0\\communitytoolkit.maui.6.1.0.nupkg.sha512",
     "C:\\Users\\Diego\\.nuget\\packages\\communitytoolkit.maui.core\\6.1.0\\communitytoolkit.maui.core.6.1.0.nupkg.sha512",
     "C:\\Users\\Diego\\.nuget\\packages\\communitytoolkit.mvvm\\8.2.2\\communitytoolkit.mvvm.8.2.2.nupkg.sha512",
+    "C:\\Users\\Diego\\.nuget\\packages\\facebook\\7.0.6\\facebook.7.0.6.nupkg.sha512",
+    "C:\\Users\\Diego\\.nuget\\packages\\firebaseauthentication.net\\4.1.0\\firebaseauthentication.net.4.1.0.nupkg.sha512",
     "C:\\Users\\Diego\\.nuget\\packages\\googlegson\\2.9.1.1\\googlegson.2.9.1.1.nupkg.sha512",
     "C:\\Users\\Diego\\.nuget\\packages\\microsoft.extensions.configuration\\7.0.0\\microsoft.extensions.configuration.7.0.0.nupkg.sha512",
     "C:\\Users\\Diego\\.nuget\\packages\\microsoft.extensions.configuration.abstractions\\7.0.0\\microsoft.extensions.configuration.abstractions.7.0.0.nupkg.sha512",
@@ -118,5 +120,16 @@
     "C:\\Users\\Diego\\.nuget\\packages\\microsoft.windowsdesktop.app.runtime.win-x64\\7.0.13\\microsoft.windowsdesktop.app.runtime.win-x64.7.0.13.nupkg.sha512",
     "C:\\Users\\Diego\\.nuget\\packages\\microsoft.netcore.app.runtime.win-x64\\7.0.13\\microsoft.netcore.app.runtime.win-x64.7.0.13.nupkg.sha512"
   ],
-  "logs": []
+  "logs": [
+    {
+      "code": "NU1701",
+      "level": "Warning",
+      "warningLevel": 1,
+      "message": "El paquete \"Facebook 7.0.6\" se restauró con \".NETFramework,Version=v4.6.1, .NETFramework,Version=v4.6.2, .NETFramework,Version=v4.7, .NETFramework,Version=v4.7.1, .NETFramework,Version=v4.7.2, .NETFramework,Version=v4.8, .NETFramework,Version=v4.8.1\" en lugar de la plataforma de destino del proyecto \"net7.0-android33.0\". Puede que el paquete no sea totalmente compatible con el proyecto.",
+      "libraryId": "Facebook",
+      "targetGraphs": [
+        "net7.0-android33.0"
+      ]
+    }
+  ]
 }

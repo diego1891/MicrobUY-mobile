@@ -1,11 +1,13 @@
 ﻿using CommunityToolkit.Maui;
-
+using Firebase.Auth;
+using Firebase.Auth.Providers;
 using MicrobUY.Services;
 using MicrobUY.ViewModels;
 using MicrobUY.Views;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
 using System.Reflection;
+
 
 namespace MicrobUY
 {
@@ -31,12 +33,16 @@ namespace MicrobUY
                 });
 
 
+           
+
+
 
             builder.Configuration.AddConfiguration(config);
 
             builder.Services.AddSingleton<INavegacionService, NavegacionService>();
             builder.Services.AddSingleton<SecurityService>();
             builder.Services.AddSingleton<PostsService>();
+            builder.Services.AddSingleton<UsuarioService>();
             builder.Services.AddSingleton<BusquedaService>();
 
             builder.Services.AddTransient<LoginViewModel>();
@@ -45,34 +51,41 @@ namespace MicrobUY
             builder.Services.AddTransient<HomeViewModel>();
             builder.Services.AddTransient<HomePage>();
 
+            builder.Services.AddTransient<BusquedaViewModel>();
+            builder.Services.AddTransient<BusquedaPage>();
+
             builder.Services.AddTransient<PostDetailViewModel>();
             builder.Services.AddTransient<PostDetailPage>();
+
+            builder.Services.AddTransient<UsuarioDetailViewModel>();
+            builder.Services.AddTransient<UsuarioDetailPage>();
 
             builder.Services.AddTransient<EscribirPostViewModel>();
             builder.Services.AddTransient<EscribirPostPage>();
 
 
             Routing.RegisterRoute(nameof(LoginPage), typeof(LoginPage));
+            Routing.RegisterRoute(nameof(BusquedaPage), typeof(BusquedaPage));
             Routing.RegisterRoute(nameof(PostDetailPage), typeof(PostDetailPage));
+            Routing.RegisterRoute(nameof(UsuarioDetailPage), typeof(UsuarioDetailPage));
             Routing.RegisterRoute(nameof(EscribirPostPage), typeof(EscribirPostPage));
 
 
             builder.Services.AddSingleton(Connectivity.Current);
             builder.Services.AddSingleton<HttpClient>();
 
-          /*  builder.Services.AddSingleton(new FirebaseAuthClient(new FirebaseAuthConfig()
+            /*builder.Services.AddSingleton(new FirebaseAuthClient(new FirebaseAuthConfig()
             {
                 ApiKey = "AIzaSyCxBzvPHr85GTaM8a9SDKS53rzx72B2l2c",
                 AuthDomain= "microbuy-5860f.firebaseapp.com",
                 Providers = new FirebaseAuthProvider[]
                 {
-                    new EmailProvider()
+                    new EmailProvider(),
+                    new GoogleProvider().AddScopes("email"),
+                    new FacebookProvider().AddScopes("email"),
+                    new GithubProvider().AddScopes("email")
                 }
-            }));
-          */
-
-
-
+            }));*/
 
 
 #if DEBUG

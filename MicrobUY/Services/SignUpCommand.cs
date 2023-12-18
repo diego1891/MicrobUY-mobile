@@ -1,4 +1,5 @@
 ﻿
+using Firebase.Auth;
 using MicrobUY.ViewModels;
 using System;
 using System.Collections.Generic;
@@ -8,9 +9,9 @@ using System.Threading.Tasks;
 
 namespace MicrobUY.Services;
 
-public  class SignUpCommand
+public  class SignUpCommand 
 {
-    /*private readonly FirebaseAuthClient _authClient;
+    private readonly FirebaseAuthClient _authClient;
     private readonly LoginViewModel _viewModel;
 
     public SignUpCommand(FirebaseAuthClient authClient, LoginViewModel viewModel)
@@ -32,5 +33,5 @@ public  class SignUpCommand
             await Application.Current.MainPage.DisplayAlert("Error", "Inicio de sesión fallido", "aceptar");
         }
         
-    }*/
+    }
 }

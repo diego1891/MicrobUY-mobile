@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="MicrobUY.Views.BusquedaPage"
+             xmlns:model="clr-namespace:MicrobUY.Models.Backend.Posts"
+             xmlns:model2="clr-namespace:MicrobUY.Models.Backend.Search"
+             xmlns:vm="clr-namespace:MicrobUY.ViewModels"
+             x:DataType="vm:BusquedaViewModel"
+              Title="BusquedaPage"
+             xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
+             Shell.NavBarIsVisible="False"
+             BackgroundColor="White">
+
+    <Grid Margin="20" RowSpacing="20">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+
+        <StackLayout 
+            Grid.Row="2"
+            Margin="20,0,20,0"
+            Orientation="Horizontal">
+
+            <ImageButton 
+                Source="back_icon"
+                CornerRadius="10"
+                BackgroundColor="White"
+                HeightRequest="40"
+                WidthRequest="40"
+                Padding="4"
+                HorizontalOptions="Start"
+                VerticalOptions="Start"
+                Margin="1"
+                Command="{Binding GetBackEventCommand}"
+            />
+        </StackLayout>
+        <SearchBar
+            Grid.Row="0"
+            Margin="5"
+            TextColor="Black"
+            BackgroundColor="White"
+            Placeholder="Buscar "
+            Text="{Binding SearchText, Mode=TwoWay}"
+           >
+            <SearchBar.Behaviors>
+            <toolkit:UserStoppedTypingBehavior
+            Command="{Binding EjecutarBusqueda}"
+            StoppedTypingTimeThreshold="1000"
+            MinimumLengthThreshold="3"
+            ShouldDismissKeyboardAutomatically="True"
+            />
+        </SearchBar.Behaviors>
+
+
+    </SearchBar>
+        <ContentView IsVisible="{Binding IsVisible}">
+            <CollectionView 
+                SelectionMode="Single" 
+                HeightRequest="700" 
+                BackgroundColor="White" 
+                ItemsSource="{Binding Busquedas}"
+                SelectedItem="{Binding BusquedaSeleccionada, Mode=TwoWay}"
+            >
+                <CollectionView.ItemsLayout>
+                    <LinearItemsLayout ItemSpacing="15" Orientation="Vertical"/>
+                </CollectionView.ItemsLayout>
+
+                <CollectionView.ItemTemplate>
+                    <DataTemplate x:DataType="model2:SearchResponse">
+                        <Frame Padding="16" BackgroundColor="White" CornerRadius="15" Margin="0,0,0,15" HasShadow="True">
+                            <StackLayout Spacing="10">
+                                <Label FontSize="16" Text="{Binding Type}" TextColor="#14171A" HorizontalTextAlignment="Center" />
+                                <Label FontSize="16" Text="{Binding Content}" TextColor="#14171A" HorizontalTextAlignment="Center" />
+                            </StackLayout>
+                        </Frame>
+                    </DataTemplate>
+                </CollectionView.ItemTemplate>
+
+            </CollectionView>
+        </ContentView>
+    </Grid>
+</ContentPage>
