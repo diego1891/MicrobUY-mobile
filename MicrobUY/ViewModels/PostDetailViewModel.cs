@@ -6,6 +6,8 @@ using MicrobUY.Services;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Drawing;
+using System.Globalization;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -36,7 +38,6 @@ public partial class PostDetailViewModel : ViewModelGlobal, IQueryAttributable
         _postsService = postsService;
         _navegacionService = navegacionService;
     }
-
 
     public async Task LoadDataAsync(string postId)
     {

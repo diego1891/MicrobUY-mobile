@@ -1,13 +1,15 @@
 ﻿using CommunityToolkit.Maui;
-using Firebase.Auth;
-using Firebase.Auth.Providers;
 using MicrobUY.Services;
 using MicrobUY.ViewModels;
 using MicrobUY.Views;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
 using System.Reflection;
-
+using Plugin.Firebase;
+using Microsoft.Maui.LifecycleEvents;
+using Plugin.Firebase.Auth;
+using Plugin.Firebase.Shared;
+using Plugin.Firebase.Android;
 
 namespace MicrobUY
 {
@@ -25,6 +27,7 @@ namespace MicrobUY
             var builder = MauiApp.CreateBuilder();
             builder
                 .UseMauiApp<App>()
+                .RegisterFirebaseServices()
                 .UseMauiCommunityToolkit()
                 .ConfigureFonts(fonts =>
                 {
@@ -94,5 +97,25 @@ namespace MicrobUY
 
             return builder.Build();
         }
+        private static MauiAppBuilder RegisterFirebaseServices(this MauiAppBuilder builder)
+        {
+            builder.ConfigureLifecycleEvents(events =>
+            {
+
+            events.AddAndroid(android => android.OnCreate((activity, state) =>
+                    CrossFirebase.Initialize(activity, state, CreateCrossFirebaseSettings())));
+            });
+
+            builder.Services.AddSingleton(_ => CrossFirebaseAuth.Current);
+
+
+            return builder;
+        }
+
+        private static CrossFirebaseSettings CreateCrossFirebaseSettings()
+        {
+            return new CrossFirebaseSettings(isAuthEnabled: true);
+        }
+
     }
 }

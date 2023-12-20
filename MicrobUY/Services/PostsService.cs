@@ -22,7 +22,8 @@ public class PostsService
 
     public async Task<PostResponse> GetPostById(string id)
     {
-        var uri = $"{settings.UrlBase}/DanielitaInstancia/Post/Get/{id}";
+        var tenant = Preferences.Get("tenant", string.Empty);
+        var uri = $"{settings.UrlBase}/{tenant}/Post/Get/{id}";
         client.DefaultRequestHeaders.Authorization = new
            AuthenticationHeaderValue("bearer", Preferences.Get("accesstoken", string.Empty));
 
@@ -36,7 +37,8 @@ public class PostsService
 
     public async Task<List<PostResponse>> GetPosts()
     {
-        var uri = $"{settings.UrlBase}/DanielitaInstancia/Post";
+        var tenant = Preferences.Get("tenant", string.Empty);
+        var uri = $"{settings.UrlBase}/{tenant}/Post";
         client.DefaultRequestHeaders.Authorization = new
            AuthenticationHeaderValue("bearer", Preferences.Get("accesstoken", string.Empty));
 
@@ -45,9 +47,10 @@ public class PostsService
         return JsonConvert.DeserializeObject<List<PostResponse>>(resultado);
     }
 
-    public async Task LikePost(string id )
+    public async Task LikePost(string id)
     {
-        var uri = $"{settings.UrlBase}/DanielitaInstancia/Post/{id}/like";
+        var tenant = Preferences.Get("tenant", string.Empty);
+        var uri = $"{settings.UrlBase}/{tenant}/Post/{id}/like";
         client.DefaultRequestHeaders.Authorization = new
            AuthenticationHeaderValue("bearer", Preferences.Get("accesstoken", string.Empty));
 
@@ -58,7 +61,8 @@ public class PostsService
 
     public async Task RepostPost(string id)
     {
-        var uri = $"{settings.UrlBase}/DanielitaInstancia/Post/{id}/Repost";
+        var tenant = Preferences.Get("tenant", string.Empty);
+        var uri = $"{settings.UrlBase}/{tenant}/Post/{id}/Repost";
         client.DefaultRequestHeaders.Authorization = new
            AuthenticationHeaderValue("bearer", Preferences.Get("accesstoken", string.Empty));
 
@@ -69,7 +73,8 @@ public class PostsService
 
     public async Task CrearPost(PostResponse post)
     {
-        var uri = $"{settings.UrlBase}/DanielitaInstancia/Post";
+        var tenant = Preferences.Get("tenant", string.Empty);
+        var uri = $"{settings.UrlBase}/{tenant}/Post";
         client.DefaultRequestHeaders.Authorization = new
            AuthenticationHeaderValue("bearer", Preferences.Get("accesstoken", string.Empty));
 
@@ -82,7 +87,8 @@ public class PostsService
 
     public async Task ComentarPost(CommentResponse comment)
     {
-        var uri = $"{settings.UrlBase}/DanielitaInstancia/Post/{comment.PostId}/comment";
+        var tenant = Preferences.Get("tenant", string.Empty);
+        var uri = $"{settings.UrlBase}/{tenant}/Post/{comment.PostId}/comment";
         client.DefaultRequestHeaders.Authorization = new
            AuthenticationHeaderValue("bearer", Preferences.Get("accesstoken", string.Empty));
 

@@ -36,9 +36,18 @@
         <VerticalStackLayout Grid.Row="1" Margin="5,40,5,0">
             <Frame Padding="16" BackgroundColor="White" CornerRadius="15" HasShadow="True">
                 <StackLayout Spacing="20">
-                    <!-- Texto de la publicación -->
-                    <Label FontSize="16" Text="{Binding Post.Contenido}" TextColor="#14171A" HorizontalTextAlignment="Center" />
+                    <Label FontSize="16" HorizontalTextAlignment="Center">
+                        <Label.FormattedText>
+                            <FormattedString>
+                                <Span Text="{Binding Post.Contenido}" TextColor="#14171A" />
+                                <Span Text="{Binding Post.Contenido, Converter={StaticResource HashtagColorConverter}}" />
+                            </FormattedString>
+                        </Label.FormattedText>
+                    </Label>
 
+                    <!-- Texto de la publicación 
+                    <Label FontSize="16" Text="{Binding Post.Contenido}" TextColor="#14171A" HorizontalTextAlignment="Center" />
+-->
                     <!-- Contador de 'Me gusta' con icono -->
                     <StackLayout Orientation="Horizontal" HorizontalOptions="StartAndExpand" Margin="10,10,0,0">
                         <Image Source="like_icon" HeightRequest="20" WidthRequest="20" >
@@ -46,7 +55,7 @@
                                 <TapGestureRecognizer Command="{Binding LikeCommand}" CommandParameter="{Binding Post.Id}"/>
                             </Image.GestureRecognizers>
                         </Image>
-
+ 
 
                         <Label Text="{Binding Post.Likes}" FontSize="14" TextColor="#657786" Margin="0,0,10,0" VerticalOptions="Center" />
                         <Image Source="retweet" HeightRequest="20" WidthRequest="20" Margin="0,0,70,0">

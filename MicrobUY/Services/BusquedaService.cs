@@ -20,7 +20,8 @@ public  class BusquedaService
 
     public async Task<List<SearchResponse>> EjecutarBusqueda(string contenido)
     {
-        var uri = $"{settings.UrlBase}/DanielitaInstancia/Search?query={Uri.EscapeDataString(contenido)}";
+        var tenant = Preferences.Get("tenant", string.Empty);
+        var uri = $"{settings.UrlBase}/{tenant}/Search?query={Uri.EscapeDataString(contenido)}";
         client.DefaultRequestHeaders.Authorization = new
            AuthenticationHeaderValue("bearer", Preferences.Get("accesstoken", string.Empty));
 

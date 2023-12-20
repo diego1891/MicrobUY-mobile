@@ -1,5 +1,5 @@
 ﻿using Firebase.Auth;
-using Firebase.Auth.Providers;
+using MicrobUY.Models.Backend.Instancia;
 using MicrobUY.Models.Backend.Login;
 using MicrobUY.Models.Config;
 using MicrobUY.Views;
@@ -14,32 +14,43 @@ public class SecurityService
 {
     private HttpClient client;
     private Settings settings;
-    private readonly FirebaseAuthClient _authClient;
-    FirebaseAuthClient cliente = new FirebaseAuthClient(new FirebaseAuthConfig()
-    {
-        ApiKey = "AIzaSyCxBzvPHr85GTaM8a9SDKS53rzx72B2l2c",
-        AuthDomain = "microbuy-5860f.firebaseapp.com",
-        Providers = new FirebaseAuthProvider[]
-                {
-                    new EmailProvider(),
-                    new GoogleProvider().AddScopes("email"),
-                    new FacebookProvider().AddScopes("email"),
-                    new GithubProvider().AddScopes("email")
-                }
-    });
+ 
 
-    
+
 
     public SecurityService(HttpClient client, IConfiguration configuration)
     {
         this.client = client;
         settings = configuration.GetRequiredSection(nameof(Settings)).Get<Settings>();
-     
+
     }
 
-    public async Task<bool> Login(string email, string password)
+    public async Task<List<InstanciaResponse>> getInstancias()
     {
-        var url = $"{settings.UrlBase}/DanielitaInstancia/Autenticacion";
+        var uri = $"{settings.UrlBase}/Instancia";
+
+        var resultado = await client.GetStringAsync(uri);
+
+        if (resultado.StartsWith("{")) 
+        {
+            // Si es un objeto, crea una lista con un solo elemento
+            var jsonCompleto = JsonConvert.DeserializeAnonymousType(resultado, new { listaInstancias = new List<InstanciaResponse>() });
+
+            // Extraer la propiedad "listaInstancias"
+            var listaInstancias = jsonCompleto.listaInstancias;
+
+            return listaInstancias;
+        }
+        else 
+        {
+            // Si es un array, realiza la deserialización normalmente
+        return JsonConvert.DeserializeObject<List<InstanciaResponse>>(resultado);
+    }
+    }
+
+    public async Task<bool> Login(string email, string password, string tenantName)
+    {
+        var url = $"{settings.UrlBase}/{tenantName}/Autenticacion";
         var loginRequest = new LoginRequest { Email = email, Password = password };
 
         var json = JsonConvert.SerializeObject(loginRequest);
@@ -62,12 +73,14 @@ public class SecurityService
         Preferences.Set("ocupacion", resultado.Ocupacion);
         Preferences.Set("fechanacimiento", resultado.FechaNacimiento);
         Preferences.Set("ubicacion", resultado.Ubicacion);
+        Preferences.Set("tenant", tenantName);
         return true;
     }
     public async Task<bool> Logout()
     {
+        var tenant = Preferences.Get("tenant", string.Empty);
         try {
-            var url = $"{settings.UrlBase}/DanielitaInstancia/Autenticacion/logout";
+            var url = $"{settings.UrlBase}/{tenant}/Autenticacion/logout";
 
             client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("bearer", Preferences.Get("accesstoken", string.Empty));
 
@@ -81,6 +94,7 @@ public class SecurityService
             Preferences.Remove("ocupacion");
             Preferences.Remove("fechanacimiento");
             Preferences.Remove("ubicacion");
+            Preferences.Remove("tenant");
 
 
             return response.IsSuccessStatusCode;
@@ -103,16 +117,23 @@ public class SecurityService
 
 
 
-    public async Task<UserCredential> Googlelogin(string email, string password)
+/*    public async Task<UserCredential> Googlelogin(string email, string password)
     {
         FirebaseProviderType firebaseProviderType = FirebaseProviderType.Google;
-        string a = "a";
-        
-        SignInRedirectDelegate redirectDelegate = MyRedirectMethod; // Assign your delegate method here
-        var userCredential = await cliente.SignInWithRedirectAsync(firebaseProviderType, redirectDelegate);
+        //var authCredential = new { ProviderType: firebaseProviderType };
+
+        //SignInRedirectDelegate redirectDelegate = MyRedirectMethod; // Assign your delegate method here
+        var userCredential = await cliente.SignInWithRedirectAsync(firebaseProviderType, uri =>
+        {
+            Console.WriteLine($"Go to \n{uri}\n and paste here the redirect uri after you finish signing in");
+            return Task.FromResult(uri);
+        });
+        //var a = await cliente.SignInWithCredentialAsync(FirebaseProviderType.Google);
         //var userCredentials = await cliente.SignInWithEmailAndPasswordAsync(email,password);
+        //var a = await cliente.SignInWithEmailAndPasswordAsync(email, password);  
+
         return userCredential;
     }
-
+*/
 }
 

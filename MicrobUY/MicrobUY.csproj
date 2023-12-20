@@ -1,8 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
 	<PropertyGroup>
-		<TargetFrameworks>net7.0-android;net7.0-ios;net7.0-maccatalyst</TargetFrameworks>
-		<TargetFrameworks Condition="$([MSBuild]::IsOSPlatform('windows'))">$(TargetFrameworks);net7.0-windows10.0.19041.0</TargetFrameworks>
+		<TargetFrameworks>net7.0-android</TargetFrameworks>
 		<!-- Uncomment to also build the tizen app. You will need to install tizen by following this: https://github.com/Samsung/Tizen.NET -->
 		<!-- <TargetFrameworks>$(TargetFrameworks);net7.0-tizen</TargetFrameworks> -->
 		<OutputType>Exe</OutputType>
@@ -37,6 +36,7 @@
 	  <AndroidSigningKeyAlias>dbronc</AndroidSigningKeyAlias>
 	  <AndroidSigningKeyPass>dbronc2023</AndroidSigningKeyPass>
 	  <AndroidApkSignerAdditionalArguments></AndroidApkSignerAdditionalArguments>
+	  <ApplicationId>microb.uy.tsi2023</ApplicationId>
 	</PropertyGroup>
 
 	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Release|net7.0-android|AnyCPU'">
@@ -45,6 +45,15 @@
 	  <AndroidSigningKeyAlias>dbronc</AndroidSigningKeyAlias>
 	  <AndroidSigningKeyPass>dbronc2023</AndroidSigningKeyPass>
 	  <AndroidApkSignerAdditionalArguments></AndroidApkSignerAdditionalArguments>
+	  <ApplicationId>microb.uy.tsi2023</ApplicationId>
+	</PropertyGroup>
+
+	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|net7.0-windows10.0.19041.0|AnyCPU'">
+	  <ApplicationId>microb.uy.tsi2023</ApplicationId>
+	</PropertyGroup>
+
+	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Release|net7.0-windows10.0.19041.0|AnyCPU'">
+	  <ApplicationId>microb.uy.tsi2023</ApplicationId>
 	</PropertyGroup>
 
 	<ItemGroup>
@@ -67,6 +76,8 @@
 
 	<ItemGroup>
 	  <None Remove="appsettings.json" />
+	  <None Remove="google-services.json" />
+	  <None Remove="Platforms\Android\Resources\values\strings.xml" />
 	  <None Remove="Resources\Images\about_icon.svg" />
 	  <None Remove="Resources\Images\back_icon.svg" />
 	  <None Remove="Resources\Images\bookmark_empty_icon.svg" />
@@ -92,22 +103,23 @@
 	  <None Remove="Resources\Images\retweet.png" />
 	  <None Remove="Resources\Images\search_icon.svg" />
 	  <None Remove="Resources\Images\settings_icon.svg" />
+	  <None Remove="Resources\Raw\firebase-adminsdk.json" />
 	</ItemGroup>
 
 	<ItemGroup>
 	  <EmbeddedResource Include="appsettings.json" />
+	  <EmbeddedResource Include="google-services.json" />
 	</ItemGroup>
 
 	<ItemGroup>
 		<PackageReference Include="CommunityToolkit.Maui" Version="6.1.0" />
 		<PackageReference Include="CommunityToolkit.Maui.Core" Version="6.1.0" />
 		<PackageReference Include="CommunityToolkit.Mvvm" Version="8.2.2" />
-		<PackageReference Include="Facebook" Version="7.0.6" />
-		<PackageReference Include="FirebaseAuthentication.net" Version="4.1.0" />
 		<PackageReference Include="Microsoft.Extensions.Configuration.Binder" Version="7.0.4" />
 		<PackageReference Include="Microsoft.Extensions.Configuration.Json" Version="7.0.0" />
 		<PackageReference Include="Microsoft.Extensions.Logging.Debug" Version="7.0.0" />
 		<PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
+		<PackageReference Include="Plugin.Firebase" Version="1.3.0" />
 	</ItemGroup>
 
 	<ItemGroup>
@@ -142,5 +154,7 @@
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
 	</ItemGroup>
-
+	<ItemGroup Condition="'$(TargetFramework)' == 'net7.0-android'">
+		<GoogleServicesJson Include="google-services.json" />
+	</ItemGroup>
 </Project>

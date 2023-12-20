@@ -11,7 +11,7 @@ namespace MicrobUY.Services;
 
 public  class SignUpCommand 
 {
-    private readonly FirebaseAuthClient _authClient;
+    /*private readonly FirebaseAuthClient _authClient;
     private readonly LoginViewModel _viewModel;
 
     public SignUpCommand(FirebaseAuthClient authClient, LoginViewModel viewModel)
@@ -34,4 +34,4 @@ public  class SignUpCommand
         }
         
     }
-}
+*/}

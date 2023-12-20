@@ -20,7 +20,8 @@ public class UsuarioService
 
     public async Task<UsuarioResponse> GetUserById(string id)
     {
-        var uri = $"{settings.UrlBase}/DanielitaInstancia/Usuario/consultar/{id}";
+        var tenant = Preferences.Get("tenant", string.Empty);
+        var uri = $"{settings.UrlBase}/{tenant}/Usuario/consultar/{id}";
         client.DefaultRequestHeaders.Authorization = new
            AuthenticationHeaderValue("bearer", Preferences.Get("accesstoken", string.Empty));
 

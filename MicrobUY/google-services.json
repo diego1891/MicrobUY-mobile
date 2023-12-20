@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "591445189717",
+    "project_id": "microbuy-5860f",
+    "storage_bucket": "microbuy-5860f.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:591445189717:android:8be1526ee3698fd1e860dc",
+        "android_client_info": {
+          "package_name": "microb.uy.tsi2023"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "591445189717-0mfm0qk9l5keou0re5cr1elh5r6elip4.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "microb.uy.tsi2023",
+            "certificate_hash": "4ef409e46e9e8215b58c9720b31d904e0e2e67d0"
+          }
+        },
+        {
+          "client_id": "591445189717-5kqsi1qs3cuf2earo7rpnrlg4g210dt1.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCxBzvPHr85GTaM8a9SDKS53rzx72B2l2c"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "591445189717-5kqsi1qs3cuf2earo7rpnrlg4g210dt1.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

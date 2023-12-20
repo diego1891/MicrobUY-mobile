@@ -48,8 +48,6 @@
                                         </FlexLayout>
                                         <Label FontSize="16" Text="{Binding FechaCreacion}" TextColor="#14171A" HorizontalTextAlignment="Center" />
                                     </FlexLayout>
-
-
                                 </StackLayout>
                             </Frame>
                         </DataTemplate>

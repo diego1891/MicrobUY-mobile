@@ -2,14 +2,19 @@
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="MicrobUY.Views.LoginPage"
+             xmlns:model="clr-namespace:MicrobUY.Models.Backend.Instancia"
+             xmlns:vm="clr-namespace:MicrobUY.ViewModels"
              Title="Iniciar Sesion"
              Shell.NavBarIsVisible="False">
+    
     <VerticalStackLayout 
     VerticalOptions="Center"
     Margin="20,0,20,0"
     Spacing="20"
+        
     >
-        <Image 
+
+       <Image 
         Source="microbuy2"
         HorizontalOptions="Center"
         HeightRequest="290"
@@ -43,11 +48,35 @@
         BackgroundColor="#1d94ab"
         Command="{Binding LoginMethodCommand}"
         />
-        <Button Text="Registrarse"
+    <!--
+       <Button Text="Registrarse"
         HeightRequest="50"
         FontSize="Medium"
-        BackgroundColor="#1d94ab"
+        BackgroundColor="#1d94ab"           
         Command="{Binding RegisterCommand}" />
+        -->    
+
+        <CollectionView 
+            SelectionMode="Single" 
+            HeightRequest="700" 
+            BackgroundColor="White" 
+            ItemsSource="{Binding Instancias}"
+            SelectedItem="{Binding InstanciaSeleccionada, Mode=TwoWay}"  
+        >
+            <CollectionView.ItemsLayout>
+                <LinearItemsLayout ItemSpacing="15" Orientation="Vertical"/>
+            </CollectionView.ItemsLayout>
+
+            <CollectionView.ItemTemplate>
+                <DataTemplate x:DataType="model:InstanciaResponse">
+                    <Frame Padding="16" BackgroundColor="White" CornerRadius="15" Margin="0,0,0,15" HasShadow="True">
+                        <StackLayout Spacing="10">
+                            <Label FontSize="16" Text="{Binding Nombre}" TextColor="#14171A" HorizontalTextAlignment="Center" />
+                        </StackLayout>
+                    </Frame>
+                </DataTemplate>
+            </CollectionView.ItemTemplate>
+        </CollectionView>
 
     </VerticalStackLayout>
 </ContentPage>
